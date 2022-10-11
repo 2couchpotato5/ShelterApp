@@ -77,18 +77,23 @@ class ShelterTest {
         testShelter.addClothes(cl1);
         testShelter.addClothes(cl2);
         testShelter.takeClothes(cl2);
+        testShelter.takeClothes(new Clothes("blouse","white", 35));
         assertEquals(1,testShelter.getClothes().size());
         testShelter.takeClothes(cl1);
         assertEquals(0,testShelter.getClothes().size());
         testShelter.addFurniture("Table");
         testShelter.addFurniture("Bed");
         testShelter.takeFurniture("Table");
+        testShelter.takeFurniture("fridge");
         assertEquals(1,testShelter.getFurnitures().size());
         testShelter.addRequest("coat");
         testShelter.addRequest("Chair");
         assertEquals(2, testShelter.getRequests().size());
         testShelter.addFurniture("Chair");
         assertEquals(1,testShelter.getRequests().size());
+        testShelter.addClothes(cl1);
+        testShelter.addClothes(cl2);
+        assertEquals(0,testShelter.getRequests().size());
     }
 
 }

@@ -176,7 +176,7 @@ public class ShelterApp {
         color = color.toLowerCase();
 
 
-        System.out.println("Enter the size of the clothes:");
+        System.out.println("Enter the size of the clothes from size 30 to 54:");
         Integer size;
         size = Integer.valueOf(input.next());
 
@@ -299,7 +299,7 @@ public class ShelterApp {
         color = color.toLowerCase();
 
 
-        System.out.println("Enter the size of the clothes:");
+        System.out.println("Enter the size of the clothes from size 30 to 54:");
         Integer size;
         size = Integer.valueOf(input.next());
 
