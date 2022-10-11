@@ -117,7 +117,6 @@ public class ShelterApp {
         } else {
             keepGoing = false;
             System.out.println("Quitting...");
-            input.close();
         }
     }
 
@@ -250,7 +249,7 @@ public class ShelterApp {
         } else {
             keepGoing = false;
             System.out.println("Quitting...");
-            input.close();
+
         }
     }
 
@@ -279,6 +278,7 @@ public class ShelterApp {
         } else {
             newFund();
         }
+
         quitingOptionsSponsor();
 
     }

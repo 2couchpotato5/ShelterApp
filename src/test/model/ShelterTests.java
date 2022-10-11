@@ -50,12 +50,15 @@ class ShelterTest {
         assertEquals(151, testShelter.getAmountFounded());
         testShelter.useDonations(1);
         assertEquals(150, testShelter.getAmountFounded());
+        testShelter.useDonations(150);
+        assertEquals(0, testShelter.getAmountFounded());
     }
 
     @Test
     void testAddLists() {
         assertEquals(0, testShelter.getClothes().size());
         testShelter.addClothes(cl1);
+        assertEquals(1, testShelter.getClothes().size());
         testShelter.addClothes(cl2);
         assertEquals(2, testShelter.getClothes().size());
         assertEquals(0, testShelter.getFurnitures().size());
