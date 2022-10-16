@@ -58,6 +58,13 @@ public class ShelterApp {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
         keepGoing = true;
+        shelter.addFurniture("chair");
+        shelter.addClothes(new Clothes("coat", "black", 45));
+        shelter.addRequest("chair");
+        shelter.fund(500);
+        shelter.addRequest("blouse");
+        shelter.addClothes(new Clothes("skirt", "white", 36));
+        shelter.addFurniture("table");
     }
 
     // EFFECTS: displays login options
@@ -180,8 +187,13 @@ public class ShelterApp {
         Integer size;
         size = Integer.valueOf(input.next());
 
+        Clothes cl = new Clothes(name, color, size);
 
-        shelter.takeClothes(new Clothes(name, color, size));
+        if (shelter.getClothes().contains(cl)) {
+            shelter.takeClothes(cl);
+        } else {
+            System.out.println("There is no such an item");
+        }
     }
 
     //MODIFIES:this
@@ -211,6 +223,8 @@ public class ShelterApp {
     private void displaySponsorPage() {
         System.out.println("Enter 'D' to make a donation");
         System.out.println("Enter 'R' to see current request");
+        System.out.println("Enter 'I' to see the list of available items");
+
         String command;
         command = input.next();
         command = command.toLowerCase();
@@ -226,6 +240,10 @@ public class ShelterApp {
             printRequests(shelter);
         } else if (command.equals("d")) {
             makeDonation();
+        } else if (command.equals("i")) {
+            printClothes(shelter);
+            printFurniture(shelter);
+            printAvailableDonations(shelter);
         } else {
             System.out.println("Selection not valid...");
         }
@@ -337,7 +355,7 @@ public class ShelterApp {
         } else {
             System.out.println("Shelter has the following clothes available:");
             for (Clothes c : shelter.getClothes()) {
-                System.out.println(c.getName() + c.getColor() + c.getSize());
+                System.out.println(c.getName() + "  in " + c.getColor() + " color and size " + c.getSize());
             }
         }
 

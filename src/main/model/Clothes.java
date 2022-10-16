@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Clothes {
     private String color;
     private String name;
@@ -10,6 +12,23 @@ public class Clothes {
         this.name = name;
         this.color = color;
         this.size = size;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Clothes clothes = (Clothes) o;
+        return size == clothes.size && color.equals(clothes.color) && name.equals(clothes.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, name, size);
     }
 
     public int getSize() {

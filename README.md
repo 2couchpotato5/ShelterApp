@@ -15,8 +15,8 @@ I wanted to implement this project as I noticed that most of the time we have cl
 
 -As a user, I want to be able to identify myself as a person in need or a sponsor.
 
--As a user, I want to be able to add a request to the list.
+-As a person in need, I want to be able to add a request to the list.
 
--As a user, I want to be able to view the list of available items.
+-As a person in need, I want to be able to view the list of available items.
 
--As a user, I want to be able to donate.
+-As a sponsor, I want to be able to donate.

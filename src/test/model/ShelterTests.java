@@ -13,12 +13,17 @@ class ShelterTest {
     private Shelter testShelter;
     private Clothes cl1;
     private Clothes cl2;
+    private Clothes cl3;
+    private Clothes cl4;
 
     @BeforeEach
     void runBefore() {
         testShelter = new Shelter();
         cl1 = new Clothes("coat", "black", 42);
         cl2 = new Clothes("shirt", "white", 52);
+        cl3 = new Clothes("coat", "black", 42);
+        cl4 = null;
+
     }
 
     @Test
@@ -32,6 +37,22 @@ class ShelterTest {
         assertEquals("coat", cl1.getName());
         assertEquals("black", cl1.getColor());
         assertEquals(42, cl1.getSize());
+    }
+
+    @Test
+
+    void testClothesEquals(){
+        Clothes cl5 = new Clothes("coat", "white", 42);
+        Clothes cl6 = new Clothes("skirt", "black", 42);
+        assertTrue(cl1.equals(cl3)&&cl3.equals(cl1));
+        assertTrue(cl1.hashCode()==cl3.hashCode());
+        assertFalse(cl1.equals(cl4));
+        assertFalse(cl1.equals(testShelter));
+        assertFalse(cl1.equals(cl5));
+        assertFalse(cl1.equals(cl6));
+
+
+
 
     }
 
@@ -79,7 +100,7 @@ class ShelterTest {
         testShelter.takeClothes(cl2);
         testShelter.takeClothes(new Clothes("blouse","white", 35));
         assertEquals(1,testShelter.getClothes().size());
-        testShelter.takeClothes(cl1);
+        testShelter.takeClothes(cl3);
         assertEquals(0,testShelter.getClothes().size());
         testShelter.addFurniture("Table");
         testShelter.addFurniture("Bed");
@@ -94,6 +115,9 @@ class ShelterTest {
         testShelter.addClothes(cl1);
         testShelter.addClothes(cl2);
         assertEquals(0,testShelter.getRequests().size());
+
     }
+
+
 
 }
