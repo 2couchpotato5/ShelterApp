@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 import model.Clothes;
 import model.Shelter;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 //Shelter application
@@ -11,8 +16,24 @@ public class ShelterApp {
     private Scanner input;
     private Shelter shelter;
     private boolean keepGoing;
+    private static final String JSON_STORE = "./data/shelter.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
-    public ShelterApp() {
+    public ShelterApp() throws FileNotFoundException {
+        shelter = new Shelter();
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
+        keepGoing = true;
+        shelter.addFurniture("chair");
+        shelter.addClothes(new Clothes("coat", "black", 45));
+        shelter.addRequest("chair");
+        shelter.fund(500);
+        shelter.addRequest("blouse");
+        shelter.addClothes(new Clothes("skirt", "white", 36));
+        shelter.addFurniture("table");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runShelter();
     }
 
@@ -20,8 +41,6 @@ public class ShelterApp {
     // EFFECTS: processes user input
     private void runShelter() {
         String command;
-
-        init();
 
         while (keepGoing) {
             displayLogin();
@@ -51,21 +70,6 @@ public class ShelterApp {
     }
 
 
-    // MODIFIES: this
-    // EFFECTS: initializes accounts
-    private void init() {
-        shelter = new Shelter();
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
-        keepGoing = true;
-        shelter.addFurniture("chair");
-        shelter.addClothes(new Clothes("coat", "black", 45));
-        shelter.addRequest("chair");
-        shelter.fund(500);
-        shelter.addRequest("blouse");
-        shelter.addClothes(new Clothes("skirt", "white", 36));
-        shelter.addFurniture("table");
-    }
 
     // EFFECTS: displays login options
     private void displayLogin() {
@@ -80,6 +84,8 @@ public class ShelterApp {
     private void displayUserPage() {
         System.out.println("Enter 'I' to see the list of available items");
         System.out.println("Enter 'R' to make new request");
+        System.out.println("Enter 'S' to save changes to file");
+        System.out.println("Enter 'L' to load last changes from file");
 
         String command;
         command = input.next();
@@ -99,6 +105,10 @@ public class ShelterApp {
             System.out.println("To make a selection print 'C'");
         } else if (command.equals("r")) {
             makeRequest();
+        } else if (command.equals("s")) {
+            saveShelter();
+        } else if (command.equals("l")) {
+            loadShelter();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -124,6 +134,29 @@ public class ShelterApp {
         } else {
             keepGoing = false;
             System.out.println("Quitting...");
+        }
+    }
+
+    // EFFECTS: saves the shelter to file
+    private void saveShelter() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(shelter);
+            jsonWriter.close();
+            System.out.println("Saved changesq to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads shelter from file
+    private void loadShelter() {
+        try {
+            shelter = jsonReader.read();
+            System.out.println("Loaded shelter changes from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
@@ -224,6 +257,8 @@ public class ShelterApp {
         System.out.println("Enter 'D' to make a donation");
         System.out.println("Enter 'R' to see current request");
         System.out.println("Enter 'I' to see the list of available items");
+        System.out.println("Enter 'S' to save changes to file");
+        System.out.println("Enter 'L' to load last changes from file");
 
         String command;
         command = input.next();
@@ -244,6 +279,10 @@ public class ShelterApp {
             printClothes(shelter);
             printFurniture(shelter);
             printAvailableDonations(shelter);
+        } else if (command.equals("s")) {
+            saveShelter();
+        } else if (command.equals("l")) {
+            loadShelter();
         } else {
             System.out.println("Selection not valid...");
         }

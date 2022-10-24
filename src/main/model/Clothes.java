@@ -1,8 +1,11 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.Objects;
 
-public class Clothes {
+public class Clothes implements Writable {
     private String color;
     private String name;
     private int size;
@@ -41,5 +44,14 @@ public class Clothes {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("color", color);
+        json.put("size", size);
+        return json;
     }
 }

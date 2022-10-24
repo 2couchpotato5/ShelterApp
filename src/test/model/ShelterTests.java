@@ -23,7 +23,6 @@ class ShelterTest {
         cl2 = new Clothes("shirt", "white", 52);
         cl3 = new Clothes("coat", "black", 42);
         cl4 = null;
-
     }
 
     @Test
@@ -40,18 +39,15 @@ class ShelterTest {
     }
 
     @Test
-
-    void testClothesEquals(){
+    void testClothesEquals() {
         Clothes cl5 = new Clothes("coat", "white", 42);
         Clothes cl6 = new Clothes("skirt", "black", 42);
-        assertTrue(cl1.equals(cl3)&&cl3.equals(cl1));
-        assertTrue(cl1.hashCode()==cl3.hashCode());
+        assertTrue(cl1.equals(cl3) && cl3.equals(cl1));
+        assertTrue(cl1.hashCode() == cl3.hashCode());
         assertFalse(cl1.equals(cl4));
         assertFalse(cl1.equals(testShelter));
         assertFalse(cl1.equals(cl5));
         assertFalse(cl1.equals(cl6));
-
-
 
 
     }
@@ -93,31 +89,29 @@ class ShelterTest {
     }
 
     @Test
-
     void testDecreasingLists() {
         testShelter.addClothes(cl1);
         testShelter.addClothes(cl2);
         testShelter.takeClothes(cl2);
-        testShelter.takeClothes(new Clothes("blouse","white", 35));
-        assertEquals(1,testShelter.getClothes().size());
+        testShelter.takeClothes(new Clothes("blouse", "white", 35));
+        assertEquals(1, testShelter.getClothes().size());
         testShelter.takeClothes(cl3);
-        assertEquals(0,testShelter.getClothes().size());
+        assertEquals(0, testShelter.getClothes().size());
         testShelter.addFurniture("Table");
         testShelter.addFurniture("Bed");
         testShelter.takeFurniture("Table");
         testShelter.takeFurniture("fridge");
-        assertEquals(1,testShelter.getFurnitures().size());
+        assertEquals(1, testShelter.getFurnitures().size());
         testShelter.addRequest("coat");
         testShelter.addRequest("Chair");
         assertEquals(2, testShelter.getRequests().size());
         testShelter.addFurniture("Chair");
-        assertEquals(1,testShelter.getRequests().size());
+        assertEquals(1, testShelter.getRequests().size());
         testShelter.addClothes(cl1);
         testShelter.addClothes(cl2);
-        assertEquals(0,testShelter.getRequests().size());
+        assertEquals(0, testShelter.getRequests().size());
 
     }
-
 
 
 }

@@ -1,0 +1,10 @@
+{
+  "Amount Founded": 300,
+  "Clothes": [{
+    "color": "black",
+    "size": 42,
+    "name": "skirt"
+  }],
+  "Furniture": ["chair"],
+  "Requests": ["blouse"]
+}
