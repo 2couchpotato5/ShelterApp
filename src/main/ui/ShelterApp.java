@@ -131,7 +131,7 @@ public class ShelterApp {
             displayUserPage();
         } else if (str.equals("c")) {
             makeSelection();
-        } else {
+        } else if (str.equals("q")) {
             keepGoing = false;
             System.out.println("Quitting...");
         }
@@ -143,7 +143,7 @@ public class ShelterApp {
             jsonWriter.open();
             jsonWriter.write(shelter);
             jsonWriter.close();
-            System.out.println("Saved changesq to " + JSON_STORE);
+            System.out.println("Saved changes to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
@@ -303,7 +303,7 @@ public class ShelterApp {
 
         if (str.equals("b")) {
             displaySponsorPage();
-        } else {
+        } else if (str.equals("q")) {
             keepGoing = false;
             System.out.println("Quitting...");
 

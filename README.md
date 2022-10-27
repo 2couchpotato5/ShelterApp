@@ -32,3 +32,5 @@ I wanted to implement this project as I noticed that most of the time we have cl
 -As a sponsor, I want my donation to be saved 
 
 As a sponsor, I want my donations to be seen by person in need
+
+**Persistence package is Based on the supplied Workroom example for CPSC 210.**
