@@ -7,12 +7,14 @@ import model.Shelter;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
 //Shelter application
-public class ShelterApp {
+public class ShelterApp  {
+
     private Scanner input;
     private Shelter shelter;
     private boolean keepGoing;
