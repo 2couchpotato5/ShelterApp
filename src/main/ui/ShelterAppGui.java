@@ -24,6 +24,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     private JButton userB;
     private JButton sponsorB;
     private JButton list;
+    private JButton listS;
     private JButton request;
     private JButton save;
     private JButton load;
@@ -33,6 +34,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     private JPanel panel;
     private JPanel spaceArea;
     private JPanel buttonArea;
+    private JPanel requestArea;
     private Shelter shelter;
     private DefaultListModel clothes;
     private DefaultListModel furniture;
@@ -118,6 +120,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     }
 
     public void userPage() {
+        login.setVisible(false);
         user = new JFrame();
         user.setLayout(new BorderLayout());
         user.setTitle("User Page");
@@ -125,8 +128,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         user.setSize(1000, 700); //sets dimensioon
         user.setResizable(false);
         spaceArea = new JPanel();
-        spaceArea.setLayout(new FlowLayout());
-        spaceArea.setSize(new Dimension(0, 0));
+        spaceArea.setLayout(new GridLayout(3,0));
         user.setVisible(true);
         initButtons();
     }
@@ -172,26 +174,94 @@ public class ShelterAppGui extends JFrame implements ActionListener {
             clothes.addElement("There are no available clothes at this moment");
         }
         spaceArea.add(scrollPane);
-        user.add(spaceArea, BorderLayout.CENTER);
-        spaceArea.revalidate();
-        spaceArea.repaint();
         buttonArea.add(select);
     }
 
+    private void printClothesS() {
+        sponsor.removeAll();
+        clothes = new DefaultListModel();
+        JList lcl = new JList(clothes);
+        lcl.setFont(new Font("MV Boli", Font.ITALIC, 15));
+        JScrollPane scrollPane = new JScrollPane(lcl);
+        String title;
+        title = "Shelter has the following clothes available:";
+        clothes.addElement(title.toUpperCase());
+        for (Clothes c : shelter.getClothes()) {
+            String k;
+            k = (c.getName().substring(0,1).toUpperCase() + c.getName().substring(1).toLowerCase()
+                    + " in " + c.getColor() + " color and in size " + c.getSize());
+            clothes.addElement(k);
+        }
+        if (clothes.getSize() < 1) {
+            clothes.removeAllElements();
+            clothes.addElement("There are no available clothes at this moment");
+        }
+        spaceArea.add(scrollPane);
+
+    }
+
+    public void printFurniture() {
+        furniture = new DefaultListModel();
+        JList lfn = new JList(furniture);
+        lfn.setFont(new Font("MV Boli", Font.ITALIC, 15));
+        JScrollPane scrollPaneF = new JScrollPane(lfn);
+        String title;
+        title = "Shelter has the following furniture available:";
+        furniture.addElement(title.toUpperCase());
+        for (String s : shelter.getFurnitures()) {
+            furniture.addElement(s);
+        }
+        if (furniture.getSize() < 1) {
+            furniture.removeAllElements();
+            furniture.addElement("There are no available clothes at this moment");
+        }
+        spaceArea.add(scrollPaneF);
+
+    }
+
+    public void printMonetary() {
+        JTextArea donations =
+                new JTextArea("Shelter received "
+                        + shelter.getAmountFounded() + "$ in monetary donations", 2,1);
+        donations.setFont(new Font("MV Boli", Font.ITALIC, 15));
+        spaceArea.add(donations);
+        user.add(spaceArea, BorderLayout.CENTER);
+        spaceArea.revalidate();
+        spaceArea.repaint();
+
+    }
+
+    public void printMonetarySponsor() {
+        JTextArea donations =
+                new JTextArea("Shelter received "
+                        + shelter.getAmountFounded() + "$ in monetary donations", 2,1);
+        donations.setFont(new Font("MV Boli", Font.ITALIC, 15));
+        spaceArea.add(donations);
+        sponsor.add(spaceArea, BorderLayout.CENTER);
+        spaceArea.revalidate();
+        spaceArea.repaint();
+
+    }
+
     public void sponsorPage() {
+        login.setVisible(false);
         sponsor = new JFrame();
         setLayout(new BorderLayout());
         sponsor.setTitle("Sponsor Page");
         sponsor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         sponsor.setSize(1000, 700); //sets dimensioon
         sponsor.setResizable(false);
+        spaceArea = new JPanel();
+        spaceArea.setLayout(new GridLayout(3,0));
+        requestArea = new JPanel();
+        requestArea.setLayout(new GridLayout(0,1));
         sponsor.setVisible(true);
         initButtonS();
     }
 
     private void initButtonS() {
-        list = new JButton("Available items");
-        list.addActionListener(this);
+        listS = new JButton("Available items");
+        listS.addActionListener(this);
         seeRequest = new JButton("Current request");
         seeRequest.addActionListener(this);
         donation = new JButton("Make a donation");
@@ -203,7 +273,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         JPanel buttonArea = new JPanel();
         buttonArea.setLayout(new GridLayout(0,1));
         buttonArea.setSize(new Dimension(0, 0));
-        buttonArea.add(list);
+        buttonArea.add(listS);
         buttonArea.add(seeRequest);
         buttonArea.add(donation);
         buttonArea.add(save);
@@ -219,6 +289,25 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     }
 
     private void printRequests() {
+        sponsor.removeAll();
+        requests = new DefaultListModel();
+        JList lrs = new JList(requests);
+        lrs.setFont(new Font("MV Boli", Font.ITALIC, 15));
+        JScrollPane scrollPaneR = new JScrollPane(lrs);
+        String title;
+        title = "Shelter has the following requests:";
+        requests.addElement(title.toUpperCase());
+        for (String s : shelter.getRequests()) {
+            requests.addElement(s);
+        }
+        if (requests.getSize() < 1) {
+            requests.removeAllElements();
+            requests.addElement("There are no requests at this moment");
+        }
+        requestArea.add(scrollPaneR);
+        sponsor.add(requestArea);
+        requestArea.revalidate();
+        requestArea.repaint();
     }
 
     private void makeDonation() {
@@ -252,20 +341,32 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         }
     }
 
+    public void userPrint() {
+        printClothes();
+        printFurniture();
+        printMonetary();
+    }
+
+    public void sponsorPrint() {
+        printClothesS();
+        printFurniture();
+        printMonetarySponsor();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == userB) {
-            login.setVisible(false);
             userPage();
         } else if (e.getSource() == sponsorB) {
-            login.setVisible(false);
             sponsorPage();
         } else if (e.getSource() == save) {
             saveShelter();
         } else if (e.getSource() == load) {
             loadShelter();
         } else if (e.getSource() == list) {
-            printClothes();
+            userPrint();
+        } else if (e.getSource() == listS) {
+            sponsorPrint();
         } else if (e.getSource() == request) {
             makeRequests();
         } else if (e.getSource() == seeRequest) {
@@ -275,6 +376,5 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         } else if (e.getSource() == select) {
             makeSelection();
         }
-
     }
 }
