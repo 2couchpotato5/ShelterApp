@@ -21,6 +21,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     private JFrame sponsor;
     private JLabel login1;
     private JLabel login2;
+    private JLabel requestTittle;
     private JButton userB;
     private JButton sponsorB;
     private JButton list;
@@ -31,6 +32,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     private JButton seeRequest;
     private JButton donation;
     private JButton select;
+    private JButton submit;
     private JPanel panel;
     private JPanel spaceArea;
     private JPanel buttonArea;
@@ -39,9 +41,17 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     private DefaultListModel clothes;
     private DefaultListModel furniture;
     private DefaultListModel requests;
-
-
-
+    private JTextField makeRequest;
+    private JTextField donateFurniture;
+    private JTextField donateMoney;
+    private JTextField donateClothesName;
+    private JTextField donateClothesSize;
+    private JTextField donateClothesColor;
+    private JTextField selectFurniture;
+    private JTextField selectMoney;
+    private JTextField selectClothesName;
+    private JTextField selectClothesSize;
+    private JTextField selectClothesColor;
 
 
     public ShelterAppGui() {
@@ -129,6 +139,8 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         user.setResizable(false);
         spaceArea = new JPanel();
         spaceArea.setLayout(new GridLayout(3,0));
+        requestArea = new JPanel();
+        requestArea.setLayout(new FlowLayout(FlowLayout.CENTER,500,50));
         user.setVisible(true);
         initButtons();
     }
@@ -136,6 +148,11 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     private void initButtons() {
         list = new JButton("Available items");
         list.addActionListener(this);
+        submit = new JButton("Submit");
+        submit.addActionListener(e -> {
+            shelter.addRequest(makeRequest.getText());
+            submit.setEnabled(false);
+        });
         request = new JButton("Make request");
         request.addActionListener(this);
         save = new JButton("Save changes");
@@ -156,6 +173,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     }
 
     private void printClothes() {
+        spaceArea.removeAll();
         clothes = new DefaultListModel();
         JList lcl = new JList(clothes);
         lcl.setFont(new Font("MV Boli", Font.ITALIC, 15));
@@ -178,7 +196,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     }
 
     private void printClothesS() {
-        sponsor.removeAll();
+        spaceArea.removeAll();
         clothes = new DefaultListModel();
         JList lcl = new JList(clothes);
         lcl.setFont(new Font("MV Boli", Font.ITALIC, 15));
@@ -283,13 +301,27 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     }
 
     private void makeRequests() {
+        requestTittle = new JLabel("Make a request of the clothes or furniture you need");
+        requestTittle.setFont(new Font("MV Boli", Font.ITALIC, 30));
+        requestTittle.setBounds(10, 130, 150, 30);
+        requestArea.add(requestTittle);
+        makeRequest = new JTextField();
+        makeRequest.setPreferredSize(new Dimension(350, 100));
+        makeRequest.setFont(new Font("MV Boli", Font.ITALIC, 20));
+        makeRequest.setBackground(Color.BLACK);
+        makeRequest.setForeground(Color.WHITE);
+        requestArea.add(makeRequest);
+        requestArea.add(submit);
+        user.add(requestArea, BorderLayout.CENTER);
+        requestArea.revalidate();
+        requestArea.repaint();
     }
 
     private void makeSelection() {
     }
 
     private void printRequests() {
-        sponsor.removeAll();
+        requestArea.removeAll();
         requests = new DefaultListModel();
         JList lrs = new JList(requests);
         lrs.setFont(new Font("MV Boli", Font.ITALIC, 15));
@@ -312,6 +344,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
 
     private void makeDonation() {
     }
+
 
 
 
@@ -376,5 +409,6 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         } else if (e.getSource() == select) {
             makeSelection();
         }
+
     }
 }
