@@ -489,6 +489,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     //MODIFIES:this
     //EFFECTS: prints current requests
     private void printRequests() {
+        spaceArea.removeAll();
         requestArea.removeAll();
         requests = new DefaultListModel();
         JList lrs = new JList(requests);
