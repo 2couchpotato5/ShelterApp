@@ -34,3 +34,13 @@ I wanted to implement this project as I noticed that most of the time we have cl
 As a sponsor, I want my donations to be seen by person in need
 
 **Persistence package is Based on the supplied Workroom example for CPSC 210.**
+
+# Instruction for grader
+
+- You can generate the first required event related to adding Xs to a Y by opening application, login in as a user
+and making donations(any will work)
+- You can generate the second required event related to adding Xs to a Y by clicking the list of available items
+and noticing the item in the list or donation being increased by the number you input
+- You can locate my visual component by opening the application and seeing it on the login page
+- You can save the state of my application by clicking the save button
+- You can reload the state of my application by clicking the load button

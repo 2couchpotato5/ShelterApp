@@ -55,11 +55,6 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     private DefaultListModel furniture;
     private DefaultListModel requests;
     private JTextField makeRequest;
-    private JTextField donateFurniture;
-    private JTextField donateMoney;
-    private JTextField donateClothesName;
-    private JTextField donateClothesSize;
-    private JTextField donateClothesColor;
     private JTextField selectFurniture;
     private JTextField selectMoney;
     private JTextField selectClothesName;
@@ -171,6 +166,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         user.setVisible(true);
     }
 
+    //EFFECTS: sets up both selection and donation page
     private void initSelectionPage() {
         clothesSelection = new JPanel();
         clothesSelection.setLayout(new FlowLayout(FlowLayout.LEADING, 37, 50));
@@ -365,6 +361,8 @@ public class ShelterAppGui extends JFrame implements ActionListener {
 
     }
 
+    //MODIFIES:this
+    //EFFECTS: initiates clothes text fields, and sets button behavior
     private void selectClothesField() {
         selectClothesName = new JTextField();
         selectClothesColor = new JTextField();
@@ -390,6 +388,8 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         revalidateRepaint(clothesTextField);
     }
 
+    //MODIFIES:this
+    //EFFECTS:sets JText formation
     private void setJText(JTextField f) {
         f.setPreferredSize(new Dimension(200, 50));
         f.setFont(new Font("MV Boli", Font.ITALIC, 15));
@@ -397,6 +397,8 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         f.setForeground(Color.WHITE);
     }
 
+    //MODIFIES:this
+    //EFFECTS:sets JPanel to be visible
     private void revalidateRepaint(JPanel p) {
         p.revalidate();
         p.repaint();
@@ -416,8 +418,10 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         spaceArea.setLayout(new GridLayout(0, 1));
         requestArea = new JPanel();
         requestArea.setLayout(new GridLayout(0, 1));
-        sponsor.setVisible(true);
+        initSelectionPage();
         initButtonS();
+        sponsor.setVisible(true);
+
     }
 
     //MODIFIES:this
@@ -509,6 +513,8 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     //MODIFIES:this
     //EFFECTS: lets user make donations
     private void makeDonation() {
+        spaceArea.removeAll();
+        requestArea.removeAll();
         donateClothes();
         donateFurnitures();
         donateMonetary();
@@ -517,17 +523,80 @@ public class ShelterAppGui extends JFrame implements ActionListener {
     //MODIFIES:this
     //EFFECTS: lets user donate  money
     private void donateMonetary() {
+        fnmnbt.removeAll();
+        submitFurnit.addActionListener(e -> {
+            shelter.addFurniture(selectFurniture.getText().toLowerCase());
+            submitFurnit.setEnabled(false);
+        });
+        submitMoney.addActionListener(e -> {
+            shelter.fund(Integer.valueOf(selectMoney.getText()));
+            submitMoney.setEnabled(false);
+        });
+        fnmnbt.add(submitFurnit);
+        fnmnbt.add(submitMoney);
+        spaceArea.add(fnmnbt);
+        sponsor.add(spaceArea, BorderLayout.CENTER);
+        revalidateRepaint(spaceArea);
     }
 
     //MODIFIES:this
     //EFFECTS: lets user donate furniture
     private void donateFurnitures() {
+        fnmnjl.removeAll();
+        fnmntf.removeAll();
+        furnitureN = new JLabel("Enter the name of the furniture");
+        moneyN = new JLabel("Enter the amount you want to donate");
+        fnmnjl.add(furnitureN);
+        fnmnjl.add(moneyN);
+        spaceArea.add(fnmnjl);
+        selectFurniture = new JTextField();
+        selectMoney = new JTextField();
+        setJText(selectFurniture);
+        setJText(selectMoney);
+        fnmntf.add(selectFurniture);
+        fnmntf.add(selectMoney);
+        spaceArea.add(fnmntf);
 
     }
 
     //MODIFIES:this
     //EFFECTS: lets user donate clothes
     private void donateClothes() {
+        clothesSelection.removeAll();
+        clothesTextField.removeAll();
+        clothesN = new JLabel("Enter the name of the clothes");
+        clothesC = new JLabel("Enter the color of the clothes");
+        clothesS = new JLabel("Enter the size from 30 to 54");
+        clothesSelection.add(clothesN);
+        clothesSelection.add(clothesC);
+        clothesSelection.add(clothesS);
+        spaceArea.add(clothesSelection);
+        //revalidateRepaint(clothesSelection);
+        donateClothesField();
+
+    }
+
+    //MODIFIES:this
+    //EFFECTS: initiates clothes text fields, and sets button behavior
+    private void donateClothesField() {
+        selectClothesName = new JTextField();
+        selectClothesColor = new JTextField();
+        selectClothesSize = new JTextField();
+        setJText(selectClothesName);
+        setJText(selectClothesColor);
+        setJText(selectClothesSize);
+        submitCloth.addActionListener(e -> {
+            Clothes cl = new Clothes(selectClothesName.getText(), selectClothesColor.getText(),
+                    Integer.valueOf(selectClothesSize.getText()));
+            shelter.addClothes(cl);
+            submitCloth.setEnabled(false);
+        });
+        clothesTextField.add(selectClothesName);
+        clothesTextField.add(selectClothesColor);
+        clothesTextField.add(selectClothesSize);
+        clothesTextField.add(submitCloth);
+        spaceArea.add(clothesTextField);
+        revalidateRepaint(clothesTextField);
 
     }
 
