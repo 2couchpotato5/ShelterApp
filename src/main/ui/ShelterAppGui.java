@@ -1,14 +1,14 @@
 package ui;
 
 import model.Clothes;
+import model.EventLog;
 import model.Shelter;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -154,7 +154,14 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         user = new JFrame();
         user.setLayout(new BorderLayout());
         user.setTitle("User Page");
-        user.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        user.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        user.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                shelter.logPrinter(EventLog.getInstance());
+                System.exit(0);
+            }
+        });
         user.setSize(1000, 700); //sets dimensioon
         user.setResizable(false);
         spaceArea = new JPanel();
@@ -411,7 +418,14 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         sponsor = new JFrame();
         setLayout(new BorderLayout());
         sponsor.setTitle("Sponsor Page");
-        sponsor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        sponsor.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        sponsor.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                shelter.logPrinter(EventLog.getInstance());
+                System.exit(0);
+            }
+        });
         sponsor.setSize(1000, 700); //sets dimensioon
         sponsor.setResizable(false);
         spaceArea = new JPanel();
@@ -643,6 +657,7 @@ public class ShelterAppGui extends JFrame implements ActionListener {
         printFurniture();
         printMonetarySponsor();
     }
+
 
     //MODIFIES: this
     //EFFECTS: handles button event

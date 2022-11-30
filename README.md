@@ -44,3 +44,13 @@ and noticing the item in the list or donation being increased by the number you 
 - You can locate my visual component by opening the application and seeing it on the login page
 - You can save the state of my application by clicking the save button
 - You can reload the state of my application by clicking the load button
+
+# Phase 4: Task 2
+- New monetary donation to shelter
+- New item of furniture added to shelter.
+- New item of clothing added to shelter.
+- Piece of clothing was taken from the shelter.
+- Furniture was taken from the shelter.
+- User took some monetary donations from shelter
+
+

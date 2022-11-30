@@ -43,6 +43,7 @@ public class Shelter implements Writable {
     // EFFECTS: increases amountFunded for this shelter by amount (in $)
     public void fund(int amount) {
         amountFounded = amountFounded + amount;
+        EventLog.getInstance().logEvent(new Event("New monetary donation to shelter"));
     }
 
     // REQUIRES: amount > 0 AND getAmountFounded()>= amount
@@ -50,6 +51,7 @@ public class Shelter implements Writable {
     // EFFECTS: decreases amountFounded for this shelter by amount (in $)
     public void useDonations(int amount) {
         amountFounded = amountFounded - amount;
+        EventLog.getInstance().logEvent(new Event("User took some monetary donations from shelter"));
     }
 
     // MODIFIES: this
@@ -60,6 +62,7 @@ public class Shelter implements Writable {
         if (requests.contains(clothes1.getName())) {
             requests.remove(clothes1.getName());
         }
+        EventLog.getInstance().logEvent(new Event("New item of clothing added to shelter."));
     }
 
     // MODIFIES: this
@@ -68,6 +71,7 @@ public class Shelter implements Writable {
         if (clothes.contains(clothes1)) {
             clothes.remove(clothes1);
         }
+        EventLog.getInstance().logEvent(new Event("Piece of clothing was taken from the shelter."));
 
     }
 
@@ -79,6 +83,7 @@ public class Shelter implements Writable {
         if (requests.contains(furniture)) {
             requests.remove(furniture);
         }
+        EventLog.getInstance().logEvent(new Event("New item of furniture added to shelter."));
     }
 
     // MODIFIES: this
@@ -87,13 +92,24 @@ public class Shelter implements Writable {
         if (furnitures.contains(furniture)) {
             furnitures.remove(furniture);
         }
+        EventLog.getInstance().logEvent(new Event("Furniture was taken from the shelter."));
     }
 
     // MODIFIES: this
     // EFFECTS: adds new request to the list of requests
     public void addRequest(String request) {
         requests.add(request);
+        EventLog.getInstance().logEvent(new Event("New request added to shelter."));
+
     }
+
+    //EFFECTS: prints log
+    public void logPrinter(EventLog eventlog) {
+        for (Event e : eventlog) {
+            System.out.println(e.getDescription());
+        }
+    }
+
 
 
     @Override
