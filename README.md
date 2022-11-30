@@ -53,4 +53,13 @@ and noticing the item in the list or donation being increased by the number you 
 - Furniture was taken from the shelter.
 - User took some monetary donations from shelter
 
+# Phase 4: Task 3
+ If I had more time, the most important thing I would do is to either merge
+shelter app with shelter gui or delete shelter app at all. Both classes have the same application, the only difference,
+ is that Gui is more visual.
+
+Also even though it is not seen in the UML diagram, I would refactor my ShelterGui class.As I have to different pages for user and sponsor, 
+A lot of the code is repetitive with difference in one or two lines, which I didn't have time to understand.
+
+Moreover, A lot of the methods there have very repetitive function that would be nice to change
 
